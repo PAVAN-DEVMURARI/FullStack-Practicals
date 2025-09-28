@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body{
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .main{
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 50px auto 0px;
+            padding: 50px 40px;
+            border-radius: 25px;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .main:hover {
+            transform: translateY(-5px);
+        }
+        
+        .searchbar{
+            position: relative;
+            display: flex;
+            width: 100%;
+            height: 50px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        input{
+            border-radius: 25px;
+            border: none;
+            outline: none;
+            display: flex;
+            flex: 1;
+            height: 50px;
+            padding: 0 50px 0 25px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus {
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        input::placeholder {
+            color: #999;
+        }
+        
+        .searchbar button{
+            position: absolute;
+            right: 8px;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            transition: all 0.3s ease;
+        }
+        
+        .searchbar button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .searchbar img{
+            width: 18px;
+            height: 18px;
+            filter: invert(1);
+        }
+        
+        h1{
+            margin: 10px 0;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .details{
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+            margin-top: 30px;
+            gap: 20px;
+        }
+        
+        .humidity, .wind{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            flex: 1;
+            transition: transform 0.3s ease;
+        }
+        
+        .humidity:hover, .wind:hover {
+            transform: translateY(-3px);
+        }
+        
+        .humidity img, .wind img{
+            width: 40px;
+            height: 40px;
+            filter: brightness(0) invert(1);
+        }
+        
+        .text p{
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .text span{
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .weather{
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .weather{
+            display: none;
+        }
+        
+        .weathericon {
+            width: 120px;
+            height: 120px;
+            margin: 20px 0;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .temp {
+            font-size: 4rem;
+            font-weight: 300;
+            margin: 10px 0;
+        }
+        
+        .city {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .error{
+            color: #ff6b6b;
+            font-weight: bold;
+            font-size: 18px;
+            display: none;
+            text-align: center;
+            background: rgba(255, 107, 107, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            margin-top: 20px;
+        }
+        
+        .error h1{
+            color: #ff6b6b;
+            font-size: 1.5rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            .main {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+            
+            .details {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .temp {
+                font-size: 3rem;
+            }
+            
+            .city {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+
+        <div class="searchbar">
+            <input class="Cname" type="text" class="searchBox" placeholder="Enter City name" spellcheck="false" >
+            <button onclick="CheckWeather()">
+                <!-- Fallback to Unicode search icon if image fails -->
+                <img src="weather-app-img/images/search.png" alt="🔍" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                <span style="display:none; font-size:18px; color:white;">🔍</span>
+            </button>
+        </div>
+        <div class="error">
+            <h1>Invalid City Name</h1>
+        </div>
+        <div class="weather">
+            <div class="weather-icon-container">
+                <img src="weather-app-img/images/rain.png" alt="" class="weathericon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div class="fallback-icon" style="display:none; font-size:120px;">🌧️</div>
+            </div>
+            <h1 class="city">Delhi</h1>
+            <h1 class="temp">22°C</h1>
+            <div class="details">               
+                <div class="humidity">
+                    <img src="weather-app-img/images/humidity.png" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                    <span style="display:none; font-size:40px;">💧</span>
+                    <div class="text">
+                        <p class="hlevel">50%</p>
+                        <span>Humidity level</span>
+                    </div>
+                </div>              
+                <div class="wind">
+                    <img src="weather-app-img/images/wind.png" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                    <span style="display:none; font-size:40px;">💨</span>
+                    <div class="text">
+                        <p class="wspeed">15 km/h</p>
+                        <span>Wind Speed</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const apiid="d7e67ea9041273943a179b896076c642";
+        const apiUrl="https://api.openweathermap.org/data/2.5/weather?units=metric";
+
+        // function city_name(){
+            
+        // }
+        let cityEnter = document.querySelector('.Cname');
+        cityEnter.addEventListener("keydown",(e)=>{
+            if(e.key==="Enter"){
+
+                CheckWeather();
+            }
+        });
+        
+        
+        async function CheckWeather() {
+            let cityName = document.querySelector(".Cname").value;
+            console.log(cityName);
+            const responce = await fetch(apiUrl + `&appid=${apiid}&q=${cityName}`);
+            if(responce.status == 404){
+                document.querySelector(".error").style.display= "block";
+                document.querySelector(".weather").style.display ="none";
+                return;
+            }
+            
+            var data = await responce.json();
+            console.log(responce.status);
+
+            document.querySelector(".city").innerHTML = data.name;
+            document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + `°C`;
+            document.querySelector(".hlevel").innerHTML = data.main.humidity + `%`;
+            document.querySelector(".wspeed").innerHTML = Math.round(data.wind.speed) + ` Km/h`;
+
+            document.querySelector(".weather").style.display ="flex";
+
+            const weatherimg = document.querySelector(".weathericon");
+            const fallbackIcon = document.querySelector(".fallback-icon");
+            console.log(data.weather[0].main);
+
+            // Reset visibility
+            weatherimg.style.display = "block";
+            fallbackIcon.style.display = "none";
+
+            if(data.weather[0].main=="Clouds"){
+                weatherimg.src = "weather-app-img/images/clouds.png";
+                fallbackIcon.innerHTML = "☁️";
+            }
+            else if(data.weather[0].main=="Rain"){
+                weatherimg.src = "weather-app-img/images/rain.png";
+                fallbackIcon.innerHTML = "🌧️";
+            }
+            else if(data.weather[0].main=="Clear"){
+                weatherimg.src = "weather-app-img/images/clear.png";
+                fallbackIcon.innerHTML = "☀️";
+            }
+            else if(data.weather[0].main=="Drizzle"){
+                weatherimg.src = "weather-app-img/images/drizzle.png";
+                fallbackIcon.innerHTML = "🌦️";
+            }
+            else if(data.weather[0].main=="Mist"){
+                weatherimg.src = "weather-app-img/images/mist.png";
+                fallbackIcon.innerHTML = "🌫️";
+            }
+            else if(data.weather[0].main=="Snow"){
+                weatherimg.src = "weather-app-img/images/snow.png";
+                fallbackIcon.innerHTML = "❄️";
+            }
+            else {
+                weatherimg.src = "";
+                fallbackIcon.innerHTML = "🌤️";
+                fallbackIcon.style.display = "block";
+                weatherimg.style.display = "none";
+            }
+
+            document.querySelector(".error").style.display= "none";
+        }
+
+        
+    </script>
+</body>
+</html>
