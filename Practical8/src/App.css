@@ -1,0 +1,137 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.gym-container {
+  min-height: 100vh;
+  background: #1a1a1a;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #00ff9d;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #888;
+  font-size: 1rem;
+}
+
+.counter-container {
+  width: 100%;
+  max-width: 500px;
+  background: #252525;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 255, 157, 0.1);
+}
+
+.display-section {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: #1a1a1a;
+  border-radius: 15px;
+  border: 2px solid #00ff9d;
+}
+
+.count {
+  font-size: 6rem;
+  font-weight: bold;
+  color: #00ff9d;
+  text-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
+}
+
+.label {
+  display: block;
+  font-size: 1.2rem;
+  color: #888;
+  margin-top: 0.5rem;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.control-btn {
+  font-size: 2.5rem;
+  padding: 1rem;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+  min-height: 80px;
+}
+
+.minus {
+  background: #ff3366;
+  color: white;
+}
+
+.plus {
+  background: #00ff9d;
+  color: #1a1a1a;
+}
+
+.control-btn:active {
+  transform: scale(0.95);
+}
+
+.reset-btn {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #00ff9d;
+  background: transparent;
+  color: #00ff9d;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.reset-btn:hover {
+  background: #00ff9d;
+  color: #1a1a1a;
+}
+
+.session-info {
+  margin-top: 2rem;
+  color: #888;
+  font-size: 1.1rem;
+}
+
+.session-info strong {
+  color: #00ff9d;
+}
+
+@media (max-width: 480px) {
+  .count {
+    font-size: 4rem;
+  }
+  
+  .control-btn {
+    font-size: 2rem;
+    min-height: 60px;
+  }
+  
+  .counter-container {
+    padding: 1.5rem;
+  }
+}
