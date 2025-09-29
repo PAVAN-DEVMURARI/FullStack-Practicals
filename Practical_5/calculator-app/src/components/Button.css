@@ -1,0 +1,126 @@
+/* Button Component Styles */
+.calculator-button {
+  height: 60px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  user-select: none;
+}
+
+.calculator-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.calculator-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Button Type Variants */
+.btn-number {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.btn-number:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.btn-operator {
+  background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.btn-operator:hover {
+  background: linear-gradient(45deg, #ff5252, #d84545);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.btn-operator.active {
+  background: linear-gradient(45deg, #4ecdc4, #44a08d);
+  box-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+}
+
+.btn-function {
+  background: linear-gradient(45deg, #feca57, #ff9ff3);
+  color: #2c2c54;
+  font-weight: 700;
+}
+
+.btn-function:hover {
+  background: linear-gradient(45deg, #fed330, #ff6b9d);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.btn-equals {
+  background: linear-gradient(45deg, #26de81, #20bf6b);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.btn-equals:hover {
+  background: linear-gradient(45deg, #20bf6b, #0fb9b1);
+  transform: translateY(-2px) scale(1.01);
+}
+
+/* Span Classes */
+.span-2 {
+  grid-column: span 2;
+}
+
+.span-3 {
+  grid-column: span 3;
+}
+
+/* Ripple Effect */
+.calculator-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  transform: translate(-50%, -50%);
+}
+
+.calculator-button:active::before {
+  width: 100px;
+  height: 100px;
+}
+
+/* Focus States for Accessibility */
+.calculator-button:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .calculator-button {
+    height: 50px;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .calculator-button {
+    height: 45px;
+    font-size: 1rem;
+  }
+}
